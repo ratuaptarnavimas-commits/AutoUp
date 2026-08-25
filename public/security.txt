@@ -1,0 +1,4 @@
+Contact: mailto:security@autoup.lt
+Expires: 2026-12-31T23:59:00.000Z
+Preferred-Languages: lt, en
+Canonical: https://autoup.lt/.well-known/security.txt

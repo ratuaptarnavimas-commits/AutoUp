@@ -1,0 +1,19 @@
+{
+  "name": "AutoUp",
+  "short_name": "AutoUp",
+  "icons": [
+    {
+      "src": "https://horizons-cdn.hostinger.com/f533b165-5105-4cde-bbbe-298474d58916/48524bc4a03dbd4767bc838852e3a00c.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://horizons-cdn.hostinger.com/f533b165-5105-4cde-bbbe-298474d58916/48524bc4a03dbd4767bc838852e3a00c.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#1a1a1a",
+  "background_color": "#1a1a1a",
+  "display": "standalone"
+}
