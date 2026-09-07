@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '@/lib/customSupabaseClient';
 
 const AdminContext = createContext();
 
@@ -8,11 +9,26 @@ export const AdminProvider = ({ children }) => {
   const [deletedPromotions, setDeletedPromotions] = useState([]);
 
   useEffect(() => {
-    // Check localStorage on mount for auth
-    const storedAuth = localStorage.getItem('adminAuth');
-    if (storedAuth === 'true') {
-      setIsAdmin(true);
-    }
+    let mounted = true;
+
+    const updateAdminStatus = (session) => {
+      const user = session?.user;
+      const configuredAdminEmail = import.meta.env.VITE_ADMIN_EMAIL?.toLowerCase();
+      const hasAdminRole = user?.app_metadata?.role === 'admin';
+      const isConfiguredAdmin = configuredAdminEmail && user?.email?.toLowerCase() === configuredAdminEmail;
+
+      if (mounted) setIsAdmin(Boolean(user && (hasAdminRole || isConfiguredAdmin)));
+    };
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      updateAdminStatus(session);
+      if (mounted) setIsLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      updateAdminStatus(session);
+      if (mounted) setIsLoading(false);
+    });
 
     // Check localStorage for deleted promotions
     const storedDeleted = localStorage.getItem('deletedPromotions');
@@ -25,21 +41,19 @@ export const AdminProvider = ({ children }) => {
       }
     }
 
-    setIsLoading(false);
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const loginAdmin = (password) => {
-    if (password === 'admin123') {
-      setIsAdmin(true);
-      localStorage.setItem('adminAuth', 'true');
-      return true;
-    }
-    return false;
+  const loginAdmin = async (email, password) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    return !error;
   };
 
-  const logoutAdmin = () => {
-    setIsAdmin(false);
-    localStorage.removeItem('adminAuth');
+  const logoutAdmin = async () => {
+    await supabase.auth.signOut();
   };
 
   const markPromotionAsDeleted = (promotionId) => {

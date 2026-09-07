@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAdmin } from "@/context/AdminContext";
 
 const INITIAL_AKCIJOS = [
   {
@@ -31,6 +32,7 @@ const INITIAL_AKCIJOS = [
 ];
 
 export default function AkcijosPage() {
+  const { isAdmin } = useAdmin();
   // Įkrauname iš localStorage arba naudojame pradinius duomenis
   const [akcijos, setAkcijos] = useState(() => {
     const saved = localStorage.getItem("autoup_akcijos");
@@ -101,7 +103,7 @@ export default function AkcijosPage() {
   };
 
   return (
-    <div className="bg-[#0B0F17] text-white font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="text-white font-sans min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">
@@ -111,22 +113,24 @@ export default function AkcijosPage() {
             Sutaupykite pasirinkdami geriausius pasiūlymus automobilių remontui Kaune ir Garliavoje.
           </p>
 
-          <button
-            onClick={() => {
-              if (showForm) resetForm();
-              else setShowForm(true);
-            }}
-            className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 font-bold px-5 py-2.5 rounded-xl transition-all text-sm"
-          >
-            {showForm ? "✕ Uždaryti Formą" : "+ Pridėti Naują Akciją"}
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => {
+                if (showForm) resetForm();
+                else setShowForm(true);
+              }}
+              className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 font-bold px-5 py-2.5 rounded-xl transition-all text-sm"
+            >
+              {showForm ? "✕ Uždaryti Formą" : "+ Pridėti Naują Akciją"}
+            </button>
+          )}
         </div>
 
         {/* FORMA (NAUDOJAMA IR PRIDĖJIMUI, IR REDAGAVIMUI) */}
         {showForm && (
           <form
             onSubmit={handleSubmit}
-            className="bg-[#121824] border border-amber-500/30 p-6 rounded-2xl max-w-2xl mx-auto mb-12 shadow-xl space-y-4"
+            className="bg-emerald-950/90 backdrop-blur-sm border border-amber-500/30 p-6 rounded-2xl max-w-2xl mx-auto mb-12 shadow-xl space-y-4"
           >
             <h3 className="text-lg font-bold text-amber-500 mb-2">
               {editingId ? "✏️ Redaguoti Akciją" : "+ Pridėti Naują Pasiūlymą"}
@@ -138,14 +142,14 @@ export default function AkcijosPage() {
                 placeholder="Ikona (pvz. 🔥, 🛢️)"
                 value={formState.ikona}
                 onChange={(e) => setFormState({ ...formState, ikona: e.target.value })}
-                className="bg-[#0B0F17] border border-gray-700 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
+                className="bg-emerald-950 border border-emerald-800 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
               />
               <input
                 type="text"
                 placeholder="Pavadinimas"
                 value={formState.pavadinimas}
                 onChange={(e) => setFormState({ ...formState, pavadinimas: e.target.value })}
-                className="sm:col-span-2 bg-[#0B0F17] border border-gray-700 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
+                className="sm:col-span-2 bg-emerald-950 border border-emerald-800 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
                 required
               />
             </div>
@@ -172,7 +176,7 @@ export default function AkcijosPage() {
               placeholder="Akcijos aprašymas..."
               value={formState.aprasymas}
               onChange={(e) => setFormState({ ...formState, aprasymas: e.target.value })}
-              className="w-full bg-[#0B0F17] border border-gray-700 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
+              className="w-full bg-emerald-950 border border-emerald-800 text-white p-3 rounded-xl focus:border-amber-500 focus:outline-none"
               rows={3}
               required
             />
@@ -187,7 +191,7 @@ export default function AkcijosPage() {
               <button
                 type="button"
                 onClick={resetForm}
-                className="bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold px-5 py-3 rounded-xl transition-all"
+                className="bg-emerald-900 hover:bg-emerald-800 text-emerald-50 font-bold px-5 py-3 rounded-xl transition-all"
               >
                 Atšaukti
               </button>
@@ -200,11 +204,11 @@ export default function AkcijosPage() {
           {akcijos.map((item) => (
             <div
               key={item.id}
-              className="bg-[#121824] border border-gray-800 hover:border-amber-500/50 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-lg relative group"
+              className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 hover:border-amber-500/50 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-lg relative group"
             >
               <div>
                 <div className="flex justify-between items-start mb-4">
-                  <span className="text-3xl bg-[#0B0F17] p-3 rounded-xl border border-gray-800">
+                  <span className="text-3xl bg-emerald-950 p-3 rounded-xl border border-emerald-800">
                     {item.ikona}
                   </span>
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
@@ -235,23 +239,24 @@ export default function AkcijosPage() {
                     Registruotis →
                   </a>
 
-                  {/* REDAGAVIMO MYGTUKAS */}
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="text-gray-400 hover:text-amber-500 p-2.5 rounded-xl border border-gray-800 hover:border-amber-500/30 transition-all"
-                    title="Redaguoti akciją"
-                  >
-                    ✏️
-                  </button>
-
-                  {/* TRINIMO MYGTUKAS */}
-                  <button
-                    onClick={() => handleIstrinti(item.id)}
-                    className="text-gray-400 hover:text-red-500 p-2.5 rounded-xl border border-gray-800 hover:border-red-500/30 transition-all"
-                    title="Ištrinti akciją"
-                  >
-                    🗑️
-                  </button>
+                  {isAdmin && (
+                    <>
+                      <button
+                        onClick={() => handleEdit(item)}
+                        className="text-gray-400 hover:text-amber-500 p-2.5 rounded-xl border border-gray-800 hover:border-amber-500/30 transition-all"
+                        title="Redaguoti akciją"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => handleIstrinti(item.id)}
+                        className="text-gray-400 hover:text-red-500 p-2.5 rounded-xl border border-gray-800 hover:border-red-500/30 transition-all"
+                        title="Ištrinti akciją"
+                      >
+                        🗑️
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

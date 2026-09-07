@@ -1,19 +1,20 @@
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "AutoRepair",
   "name": "AutoUp",
   "url": "https://autoup.lt",
   "logo": "https://horizons-cdn.hostinger.com/f533b165-5105-4cde-bbbe-298474d58916/48524bc4a03dbd4767bc838852e3a00c.png",
-  "description": "Profesionalus padangų montavimas, balansavimas ir remontas.",
+  "description": "AutoUp autoservisas Garliavoje: važiuoklės remontas, padangų montavimas, stabdžių remontas, diagnostika ir alyvos keitimas.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Jūsų adresas",
-    "addressLocality": "Vilnius",
+    "streetAddress": "Liepų g. 40-51",
+    "addressLocality": "Garliava",
+    "addressRegion": "Kauno r.",
     "addressCountry": "LT"
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+370 600 00000",
+    "telephone": "+37065118482",
     "contactType": "customer service"
   }
 }

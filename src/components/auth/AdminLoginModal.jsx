@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Lock, KeyRound, LogIn } from 'lucide-react';
+import { X, Lock, KeyRound, Mail, LogIn, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { useAdmin } from '@/context/AdminContext';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib/customSupabaseClient';
 
 const AdminLoginModal = ({ isOpen, onClose }) => {
   const { loginAdmin } = useAdmin();
   const { toast } = useToast();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isResetMode, setIsResetMode] = useState(false);
+  const [isSendingReset, setIsSendingReset] = useState(false);
   const [error, setError] = useState(false);
+  const [resetMessage, setResetMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = loginAdmin(password);
+    const success = await loginAdmin(email, password);
     
     if (success) {
       toast({
@@ -24,6 +30,7 @@ const AdminLoginModal = ({ isOpen, onClose }) => {
         description: "Dabar turite administratoriaus teises.",
         variant: "default",
       });
+      setEmail('');
       setPassword('');
       setError(false);
       onClose();
@@ -31,10 +38,43 @@ const AdminLoginModal = ({ isOpen, onClose }) => {
       setError(true);
       toast({
         title: "Klaida",
-        description: "Neteisingas slaptažodis.",
+        description: "Neteisingas el. paštas arba slaptažodis.",
         variant: "destructive",
       });
     }
+  };
+
+  const handlePasswordReset = async (event) => {
+    event.preventDefault();
+    if (!email.trim()) {
+      setError(true);
+      setResetMessage('Įrašykite administratoriaus el. paštą.');
+      return;
+    }
+
+    setIsSendingReset(true);
+    setResetMessage('');
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/`,
+    });
+    setIsSendingReset(false);
+
+    if (resetError) {
+      setResetMessage(`Nepavyko išsiųsti: ${resetError.message}`);
+      toast({
+        title: 'Atkūrimas nepavyko',
+        description: resetError.message,
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Laiškas išsiųstas',
+      description: 'Patikrinkite el. paštą ir sekite slaptažodžio atkūrimo nuorodą.',
+    });
+    setResetMessage('Atkūrimo laiškas išsiųstas. Patikrinkite Inbox ir Spam aplankus.');
+    setIsResetMode(false);
   };
 
   return (
@@ -78,38 +118,82 @@ const AdminLoginModal = ({ isOpen, onClose }) => {
                   </Button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <form onSubmit={isResetMode ? handlePasswordReset : handleSubmit} className="p-6 space-y-4 text-slate-900">
                   <div className="space-y-2">
-                    <Label htmlFor="password">Slaptažodis</Label>
+                    <Label htmlFor="email" className="text-slate-700">Administratoriaus el. paštas</Label>
                     <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setError(false);
+                            setResetMessage('');
+                        }}
+                        className="pl-9 bg-white text-slate-900 border-slate-300 placeholder:text-slate-400"
+                        placeholder="admin@autoup.lt"
+                        autoFocus
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    {!isResetMode && <Label htmlFor="password" className="text-slate-700">Slaptažodis</Label>}
+                    {!isResetMode && <div className="relative">
                       <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                       <Input
                         id="password"
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => {
                           setPassword(e.target.value);
                           setError(false);
                         }}
-                        className={`pl-9 ${error ? 'border-red-500 ring-red-200' : ''}`}
+                        className={`pl-9 pr-10 bg-white text-slate-900 border-slate-300 placeholder:text-slate-400 ${error ? 'border-red-500 ring-red-200' : ''}`}
                         placeholder="Įveskite slaptažodį..."
-                        autoFocus
+                        required
                       />
-                    </div>
-                    {error && (
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((visible) => !visible)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900"
+                        aria-label={showPassword ? 'Slėpti slaptažodį' : 'Rodyti slaptažodį'}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>}
+                    {error && !isResetMode && (
                       <p className="text-xs text-red-500 font-medium ml-1">
-                        Neteisingas slaptažodis. Bandykite dar kartą.
+                        Neteisingas el. paštas arba slaptažodis. Bandykite dar kartą.
+                      </p>
+                    )}
+                    {isResetMode && resetMessage && (
+                      <p className={`text-xs font-medium ${resetMessage.startsWith('Nepavyko') ? 'text-red-600' : 'text-green-700'}`}>
+                        {resetMessage}
                       </p>
                     )}
                   </div>
 
-                  <Button 
+                  <Button
                     type="submit" 
                     className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+                    disabled={isSendingReset}
                   >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Prisijungti
+                    {isResetMode ? 'Siųsti atkūrimo laišką' : <><LogIn className="w-4 h-4 mr-2" />Prisijungti</>}
                   </Button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsResetMode((resetMode) => !resetMode);
+                      setError(false);
+                    }}
+                    className="flex items-center justify-center gap-1 w-full text-sm text-slate-600 hover:text-slate-900"
+                  >
+                    {isResetMode ? <><ArrowLeft className="h-4 w-4" /> Grįžti į prisijungimą</> : 'Pamiršau slaptažodį'}
+                  </button>
                 </form>
               </Card>
             </motion.div>

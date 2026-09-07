@@ -14,10 +14,12 @@ import ismetimas1 from "../static/image/ismetimosistemos.1jpg.webp";
 import ismetimas2 from "../static/image/ismetimosistemos2.jpg";
 import technineApziura1 from "../static/image/TA.1jpg.jpg";
 import technineApziura2 from "../static/image/TA2.jpg";
+import zibintai1 from "../static/image/Zibintu poliravimas-1.jpeg";
+import zibintai2 from "../static/image/Zibintu poliravimas-2.jpeg";
 
 export const paslaugosData = [
   {
-    id: "vaziukles-remontas",
+    id: "vaziuokles-remontas",
     pavadinimas: "Važiuoklės | Pakabos remontas",
     aprasymas: "Išsamus pakabos patikrinimas, barskesių šalinimas ir nusidėvėjusių detalių keitimas kokybiškomis dalimis.",
     isrobintasAprasymas: "Tvarkinga automobilio važiuoklė užtikrina ne tik komfortišką, bet ir saugų važiavimą. Laiku nepastebėti pakabos gedimai skatina netolygų padangų dėvėjimąsi, blogina automobilio valdomumą ir sukelia papildomą apkrovą kitiems mazgams.",
@@ -134,7 +136,6 @@ export const paslaugosData = [
       "Duslintuvų suvirinimas ir sandarinimas",
       "Išmetimo sistemos gofrų keitimas",
       "Duslintuvo laikiklių ir gumų keitimas",
-      "Katalizatorių ir DPF filtrų patikra",
       "Atskirų išmetimo vamzdžių sekcijų keitimas"
     ]
   },
@@ -150,10 +151,10 @@ export const paslaugosData = [
     ],
     darbai: [
       "Pakabos ir vairavimo mechanizmo patikra",
-      "Stabdžių sistemos efektyvumo patikrinimas",
       "Šviesų ir žibintų reguliavimas - Ruošiama",
       "Skysčių nuotėkio patikra",
-      "Trūkumų šalinimas prieš TA"
+      "Trūkumų šalinimas prieš TA",
+      "Slenksčių darbai"
     ]
   },
   {
@@ -162,7 +163,10 @@ export const paslaugosData = [
     aprasymas: "Žibintų stiklų poliravimas, atkuriantis jų skaidrumą ir gerinantis matomumą kelyje.",
     isrobintasAprasymas: "Poliruojame pageltusius, matiniais tapusius ar smulkiai subraižytus žibintų stiklus, kad jie vėl būtų skaidresni ir efektyviau apšviestų kelią.",
     ikona: "💡",
-    nuotraukos: [],
+    nuotraukos: [
+      zibintai1,
+      zibintai2
+    ],
     darbai: [
       "Žibintų būklės įvertinimas",
       "Žibintų stiklų poliravimas",
@@ -173,7 +177,7 @@ export const paslaugosData = [
 
 export default function Paslaugos() {
   return (
-    <div className="bg-[#0B0F17] min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans text-white">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans text-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl font-black tracking-wide text-white mb-4">
@@ -185,7 +189,7 @@ export default function Paslaugos() {
           {paslaugosData.map((item) => (
             <div
               key={item.id}
-              className="bg-[#121824] border border-gray-800 rounded-2xl p-6 hover:border-amber-500/50 transition-all flex flex-col justify-between group shadow-lg min-h-[140px]"
+              className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-6 hover:border-amber-500/50 transition-all flex flex-col justify-between group shadow-lg min-h-[140px]"
             >
               <div>
                 <h3 className="text-xl font-bold text-white group-hover:text-amber-500 transition-colors">

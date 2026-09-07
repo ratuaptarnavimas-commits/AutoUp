@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { sendBookingEmail } from '@/services/web3formsService';
+import { supabase } from '@/lib/customSupabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 
 const BookingForm = ({ date, onClose, onSuccess }) => {
@@ -15,7 +16,8 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
     name: '',
     email: '',
     phone: '',
-    notes: ''
+    notes: '',
+    time: '09:00'
   });
   const [errors, setErrors] = useState({});
 
@@ -35,6 +37,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
       newErrors.email = 'Neteisingas el. pašto formatas';
     }
     if (!formData.phone.trim()) newErrors.phone = 'Telefono numeris yra privalomas';
+    if (!formData.time) newErrors.time = 'Pasirinkite pageidaujamą laiką';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -48,12 +51,25 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
     setIsLoading(true);
     
     try {
-      // Map form fields to Web3Forms readable names
+      const dateValue = new Date(date).toISOString().split('T')[0];
+      const { error: bookingError } = await supabase.from('bookings').insert({
+        customer_name: formData.name.trim(),
+        customer_email: formData.email.trim(),
+        customer_phone: formData.phone.trim(),
+        booking_date: dateValue,
+        preferred_time: formData.time,
+        notes: formData.notes.trim() || null,
+        status: 'pending'
+      });
+
+      if (bookingError) throw bookingError;
+
       const payload = {
         Vardas: formData.name,
         Email: formData.email,
         Telefonas: formData.phone,
         Data: formattedDate,
+        Laikas: formData.time,
         Papildoma: formData.notes || "Nėra pastabų"
       };
 
@@ -62,7 +78,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
       if (result.success) {
         toast({
           title: "Sėkmė!",
-          description: "Booking request sent successfully! We'll contact you soon.",
+          description: "Rezervacijos užklausa išsaugota. Netrukus su jumis susisieksime.",
           className: "bg-green-500 text-white border-none",
         });
         
@@ -71,18 +87,24 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
           name: '',
           email: '',
           phone: '',
-          notes: ''
+          notes: '',
+          time: '09:00'
         });
 
         if (onSuccess) onSuccess();
         onClose();
       } else {
-        throw new Error(result.message);
+        toast({
+          title: "Rezervacija gauta",
+          description: "Užklausa išsaugota, tačiau el. pašto pranešimo išsiųsti nepavyko.",
+        });
+        if (onSuccess) onSuccess();
+        onClose();
       }
     } catch (error) {
       toast({
         title: "Klaida",
-        description: "Failed to send booking request. Please try again.",
+        description: "Rezervacijos išsaugoti nepavyko. Pabandykite dar kartą arba paskambinkite.",
         variant: "destructive",
       });
     } finally {
@@ -190,6 +212,26 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
               />
             </div>
             {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="time" className="text-slate-700">Pageidaujamas laikas</Label>
+            <div className="relative">
+              <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-slate-400" />
+              <Input
+                id="time"
+                name="time"
+                type="time"
+                min="08:00"
+                max="18:00"
+                className={`pl-10 ${errors.time ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                value={formData.time}
+                onChange={handleChange}
+                disabled={isLoading}
+                required
+              />
+            </div>
+            {errors.time && <p className="text-xs text-red-500">{errors.time}</p>}
           </div>
 
           <div className="space-y-2">

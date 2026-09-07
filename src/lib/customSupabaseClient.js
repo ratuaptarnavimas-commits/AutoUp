@@ -1,9 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://kqkrukzlpmuqnyzptofw.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtxa3J1a3pscG11cW55enB0b2Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNjA4MjEsImV4cCI6MjA4NjYzNjgyMX0.VTQNtrXnJ7XjpLLEnMFh-zbtirl7_3pFxcziz-DO8U0';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const customSupabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Trūksta Supabase URL arba Publishable/Anon rakto .env faile.');
+}
+const customSupabaseClient = createClient(supabaseUrl, supabaseKey);
 
 export default customSupabaseClient;
 

@@ -57,7 +57,7 @@ export default function Kontaktai() {
   };
 
   return (
-    <section id="kontaktai" className="py-16 bg-slate-950 text-white border-t border-slate-800">
+    <section id="kontaktai" className="py-16 text-white border-t border-emerald-800/70">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-amber-500 mb-3">
@@ -67,7 +67,7 @@ export default function Kontaktai() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-6 text-center">
             <div className="text-3xl mb-3">📍</div>
             <h3 className="font-bold text-lg mb-1">Lokacija</h3>
             <a
@@ -80,7 +80,7 @@ export default function Kontaktai() {
             </a>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-6 text-center">
             <div className="text-3xl mb-3">✉️</div>
             <h3 className="font-bold text-lg mb-1">El. paštas</h3>
             <a href="mailto:ratuaptarnavimas@gmail.com" className="text-amber-400 text-sm font-semibold hover:underline">
@@ -88,7 +88,7 @@ export default function Kontaktai() {
             </a>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
+          <div className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-6 text-center">
             <div className="text-3xl mb-3">📞</div>
             <h3 className="font-bold text-lg mb-1">Telefonas</h3>
             <a href="tel:+37065118482" className="text-amber-400 text-sm font-semibold hover:underline">
@@ -97,7 +97,7 @@ export default function Kontaktai() {
           </div>
         </div>
 
-        <div id="registracija" className="mt-8 max-w-3xl mx-auto bg-slate-900 border border-amber-500/40 rounded-2xl p-6 sm:p-8">
+        <div id="registracija" className="mt-8 max-w-3xl mx-auto bg-emerald-950/90 backdrop-blur-sm border border-amber-500/40 rounded-2xl p-6 sm:p-8">
           <h3 className="text-2xl font-bold text-center text-amber-500">Registracija vizitui</h3>
           <p className="mt-2 text-center text-sm text-slate-400">
             Pasirinkite pageidaujamą datą ir laiką – vizitą patvirtinsime susisiekę su jumis.

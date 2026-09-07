@@ -6,10 +6,17 @@ const BASE_URL = 'https://autoup.lt';
 
 const pages = [
   { url: '/', changefreq: 'daily', priority: 1.0 },
-  { url: '/#informacija', changefreq: 'monthly', priority: 0.7 },
-  { url: '/#paslaugos', changefreq: 'monthly', priority: 0.8 },
-  { url: '/#registracija', changefreq: 'monthly', priority: 0.8 },
-  { url: '/#kontaktai', changefreq: 'monthly', priority: 0.8 },
+  { url: '/paslaugos', changefreq: 'monthly', priority: 0.9 },
+  { url: '/akcijos', changefreq: 'weekly', priority: 0.8 },
+  { url: '/kontaktai', changefreq: 'monthly', priority: 0.8 },
+  { url: '/paslaugos/vaziuokles-remontas', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/padangu-montavimas', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/stabdziu-remontas', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/tepalu-keitimas', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/kompiuterine-diagnostika', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/ischeckio-remontas', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/technine-pagalba', changefreq: 'monthly', priority: 0.7 },
+  { url: '/paslaugos/zibintu-stiklu-poliravimas', changefreq: 'monthly', priority: 0.7 },
 ];
 
 const generateSitemap = () => {
