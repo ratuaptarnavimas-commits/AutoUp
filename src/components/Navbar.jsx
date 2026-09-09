@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CalendarDays, Wrench } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import CalendarModal from "./schedule/CalendarModal";
 
 export default function Navbar() {
@@ -13,11 +13,12 @@ export default function Navbar() {
         
         {/* LOGO */}
         <Link to="/" className="group flex items-center gap-2.5" aria-label="AutoUp pagrindinis puslapis">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/60 bg-[#0b2418] text-amber-400 shadow-lg shadow-black/20 transition-transform group-hover:rotate-[-8deg]">
-            <Wrench className="h-5 w-5" strokeWidth={2.5} />
-          </span>
-          <span className="text-2xl font-black italic tracking-tight text-white drop-shadow-md">
-            Auto<span className="text-red-500">Up</span>
+          <span className="flex h-12 w-24 items-center overflow-hidden rounded-xl border border-emerald-700/60 bg-[#06150d] shadow-lg shadow-black/20 transition-transform group-hover:scale-105">
+            <img
+              src="/images/logo.png"
+              alt="AutoUp automobilių servisas"
+              className="h-full w-full object-cover object-center mix-blend-screen"
+            />
           </span>
         </Link>
 
