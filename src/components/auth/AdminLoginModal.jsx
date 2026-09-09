@@ -54,16 +54,22 @@ const AdminLoginModal = ({ isOpen, onClose }) => {
 
     setIsSendingReset(true);
     setResetMessage('');
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: `${window.location.origin}${window.location.pathname}`,
-    });
+    let resetError;
+    try {
+      ({ error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: 'https://www.autoup.lt/',
+      }));
+    } catch (error) {
+      resetError = error;
+    }
     setIsSendingReset(false);
 
     if (resetError) {
-      setResetMessage(`Nepavyko išsiųsti: ${resetError.message}`);
+      const message = resetError.message || 'Supabase serveris nepasiekiamas.';
+      setResetMessage(`Nepavyko išsiųsti: ${message}`);
       toast({
         title: 'Atkūrimas nepavyko',
-        description: resetError.message,
+        description: message,
         variant: 'destructive',
       });
       return;
