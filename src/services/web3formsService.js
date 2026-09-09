@@ -18,6 +18,7 @@ export const sendBookingEmail = async (bookingDetails) => {
         user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
         template_params: {
           to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL || "ratuaptarnavimas@gmail.com",
+          subject: "Nauja rezervacija iš AutoUp",
           from_name: bookingDetails.Vardas,
           reply_to: bookingDetails.Email,
           vardas: bookingDetails.Vardas,
@@ -26,7 +27,15 @@ export const sendBookingEmail = async (bookingDetails) => {
           data: bookingDetails.Data,
           laikas: bookingDetails.Laikas,
           problema: bookingDetails.Papildoma,
-          formos_tipas: "Registracija vizitui"
+          formos_tipas: "Registracija vizitui",
+          message: [
+            `Vardas: ${bookingDetails.Vardas}`,
+            `Telefonas: ${bookingDetails.Telefonas}`,
+            `El. paštas: ${bookingDetails.Email}`,
+            `Data: ${bookingDetails.Data}`,
+            `Laikas: ${bookingDetails.Laikas}`,
+            `Papildoma informacija: ${bookingDetails.Papildoma || "Nenurodyta"}`
+          ].join("\n")
         }
       }),
     });
