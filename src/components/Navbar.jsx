@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Wrench } from "lucide-react";
 import CalendarModal from "./schedule/CalendarModal";
 
 export default function Navbar() {
@@ -12,8 +12,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
         
         {/* LOGO */}
-        <Link to="/" className="text-2xl font-black italic tracking-tight text-white drop-shadow-md">
-          Auto<span className="text-red-600">Up</span>
+        <Link to="/" className="group flex items-center gap-2.5" aria-label="AutoUp pagrindinis puslapis">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-400/60 bg-[#0b2418] text-amber-400 shadow-lg shadow-black/20 transition-transform group-hover:rotate-[-8deg]">
+            <Wrench className="h-5 w-5" strokeWidth={2.5} />
+          </span>
+          <span className="text-2xl font-black italic tracking-tight text-white drop-shadow-md">
+            Auto<span className="text-red-500">Up</span>
+          </span>
         </Link>
 
         {/* MENIU NUORODOS */}
