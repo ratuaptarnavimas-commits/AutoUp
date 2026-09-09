@@ -55,6 +55,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
         Vardas: formData.name,
         Email: formData.email,
         Telefonas: formData.phone,
+        Automobilis: "Nenurodyta (rezervacijos lange automobilio lauko nėra)",
         Data: formattedDate,
         Laikas: formData.time,
         Papildoma: formData.notes || "Nėra pastabų"

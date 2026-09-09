@@ -27,6 +27,7 @@ export const sendBookingEmail = async (bookingDetails) => {
           vardas: bookingDetails.Vardas,
           telefonas: bookingDetails.Telefonas,
           el_pastas: bookingDetails.Email,
+          automobilis: bookingDetails.Automobilis,
           data: bookingDetails.Data,
           laikas: bookingDetails.Laikas,
           problema: bookingDetails.Papildoma,
@@ -35,6 +36,7 @@ export const sendBookingEmail = async (bookingDetails) => {
             `Vardas: ${bookingDetails.Vardas}`,
             `Telefonas: ${bookingDetails.Telefonas}`,
             `El. paštas: ${bookingDetails.Email}`,
+            `Automobilis: ${bookingDetails.Automobilis}`,
             `Data: ${bookingDetails.Data}`,
             `Laikas: ${bookingDetails.Laikas}`,
             `Papildoma informacija: ${bookingDetails.Papildoma || "Nenurodyta"}`
