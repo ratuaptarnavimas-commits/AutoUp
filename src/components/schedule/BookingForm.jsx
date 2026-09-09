@@ -51,19 +51,6 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
     setIsLoading(true);
     
     try {
-      const dateValue = new Date(date).toISOString().split('T')[0];
-      const { error: bookingError } = await supabase.from('bookings').insert({
-        customer_name: formData.name.trim(),
-        customer_email: formData.email.trim(),
-        customer_phone: formData.phone.trim(),
-        booking_date: dateValue,
-        preferred_time: formData.time,
-        notes: formData.notes.trim() || null,
-        status: 'pending'
-      });
-
-      if (bookingError) throw bookingError;
-
       const payload = {
         Vardas: formData.name,
         Email: formData.email,
@@ -76,6 +63,21 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
       const result = await sendBookingEmail(payload);
 
       if (result.success) {
+        const dateValue = new Date(date).toISOString().split('T')[0];
+        const { error: bookingError } = await supabase.from('bookings').insert({
+          customer_name: formData.name.trim(),
+          customer_email: formData.email.trim(),
+          customer_phone: formData.phone.trim(),
+          booking_date: dateValue,
+          preferred_time: formData.time,
+          notes: formData.notes.trim() || null,
+          status: 'pending'
+        });
+
+        if (bookingError) {
+          console.warn('[Booking] Email sent, but database save failed:', bookingError);
+        }
+
         toast({
           title: "Sėkmė!",
           description: "Rezervacijos užklausa išsaugota. Netrukus su jumis susisieksime.",
@@ -94,12 +96,12 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
         if (onSuccess) onSuccess();
         onClose();
       } else {
+        console.error('[Booking] Email failed:', result.message);
         toast({
-          title: "Rezervacija gauta",
-          description: "Užklausa išsaugota, tačiau el. pašto pranešimo išsiųsti nepavyko.",
+          title: "Nepavyko išsiųsti",
+          description: result.message || "El. pašto pranešimo išsiųsti nepavyko.",
+          variant: "destructive",
         });
-        if (onSuccess) onSuccess();
-        onClose();
       }
     } catch (error) {
       toast({
