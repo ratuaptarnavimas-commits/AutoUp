@@ -103,7 +103,7 @@ export default function ServiceSlider() {
               aria-label="Skambinti telefonu +370 651 18482"
               className="inline-block border-2 border-emerald-950 text-emerald-950 font-bold text-center py-2 px-4 rounded-xl hover:bg-emerald-950 hover:text-amber-500 transition-all text-sm"
             >
-              Registruotis telefonu
+              Skambinti 0651 18482
             </a>
           </div>
 
