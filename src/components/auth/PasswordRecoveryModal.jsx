@@ -18,6 +18,28 @@ export default function PasswordRecoveryModal() {
       }
     });
 
+    const openRecoveryFromUrl = async () => {
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+      const queryParams = new URLSearchParams(window.location.search);
+      const recoveryType = hashParams.get('type');
+      const recoveryCode = queryParams.get('code');
+
+      if (recoveryCode) {
+        const { error } = await supabase.auth.exchangeCodeForSession(recoveryCode);
+        if (error) {
+          setStatus(`Atkūrimo nuoroda nebegalioja: ${error.message}`);
+          return;
+        }
+      }
+
+      if (recoveryType === 'recovery' || recoveryCode) {
+        setIsOpen(true);
+        setStatus('');
+      }
+    };
+
+    openRecoveryFromUrl();
+
     return () => subscription.unsubscribe();
   }, []);
 
