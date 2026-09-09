@@ -51,17 +51,35 @@ export const sendBookingEmail = async (bookingDetails) => {
         message: 'Booking request sent successfully!' 
       };
     } else {
-      console.error('[Web3Forms] Error:', result);
-      return {
-        success: false,
-        message: result.message || 'Nepavyko išsiųsti rezervacijos laiško.'
-      };
+      throw new Error(result.message || 'EmailJS rejected the request');
     }
   } catch (error) {
-    console.error('[Web3Forms] Network Error:', error);
-    return {
-      success: false,
-      message: 'Network error occurred. Please try again later.'
-    };
+    console.warn('[EmailJS] Nepavyko išsiųsti, bandomas Web3Forms:', error);
+
+    try {
+      const fallbackResponse = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: '438c8f64-a249-4b1c-8a8d-5f11b5474c39',
+          subject: 'Nauja rezervacija iš AutoUp',
+          botcheck: '',
+          ...bookingDetails,
+          name: bookingDetails.Vardas,
+          email: bookingDetails.Email,
+          message: bookingDetails.message
+        })
+      });
+      const fallbackResult = await fallbackResponse.json();
+
+      if (fallbackResult.success) {
+        return { success: true, message: 'Rezervacija išsiųsta.' };
+      }
+
+      return { success: false, message: fallbackResult.message || 'Nepavyko išsiųsti rezervacijos laiško.' };
+    } catch (fallbackError) {
+      console.error('[Web3Forms] Atsarginis siuntimas nepavyko:', fallbackError);
+      return { success: false, message: 'Nepavyko išsiųsti rezervacijos laiško.' };
+    }
   }
 };
