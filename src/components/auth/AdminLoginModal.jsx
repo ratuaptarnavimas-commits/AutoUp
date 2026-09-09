@@ -55,7 +55,7 @@ const AdminLoginModal = ({ isOpen, onClose }) => {
     setIsSendingReset(true);
     setResetMessage('');
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: `${window.location.origin}/`,
+      redirectTo: `${window.location.origin}${window.location.pathname}`,
     });
     setIsSendingReset(false);
 

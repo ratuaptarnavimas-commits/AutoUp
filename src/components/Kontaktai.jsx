@@ -102,6 +102,12 @@ export default function Kontaktai() {
           <p className="mt-2 text-center text-sm text-slate-400">
             Pasirinkite pageidaujamą datą ir laiką – vizitą patvirtinsime susisiekę su jumis.
           </p>
+          <a
+            href="tel:+37065118482"
+            className="mt-5 flex w-full items-center justify-center rounded-lg border border-amber-500 px-4 py-3 font-bold text-amber-400 transition-colors hover:bg-amber-500 hover:text-slate-950"
+          >
+            Skambinti: 0651 18482
+          </a>
 
           <form onSubmit={handleRegistracijaSubmit} className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <label className="text-sm font-semibold text-slate-200">
@@ -111,7 +117,7 @@ export default function Kontaktai() {
                 value={registracija.vardas}
                 onChange={handleRegistracijosChange}
                 required
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none focus:border-amber-500"
               />
             </label>
 
@@ -123,7 +129,7 @@ export default function Kontaktai() {
                 value={registracija.telefonas}
                 onChange={handleRegistracijosChange}
                 required
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none focus:border-amber-500"
               />
             </label>
 
@@ -135,7 +141,7 @@ export default function Kontaktai() {
                 value={registracija.elPastas}
                 onChange={handleRegistracijosChange}
                 required
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none focus:border-amber-500"
               />
             </label>
 
@@ -147,7 +153,7 @@ export default function Kontaktai() {
                 onChange={handleRegistracijosChange}
                 required
                 placeholder="Markė, modelis, valstybinis numeris"
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none placeholder:text-slate-500 focus:border-amber-500"
               />
             </label>
 
@@ -160,7 +166,7 @@ export default function Kontaktai() {
                 onChange={handleRegistracijosChange}
                 min={new Date().toISOString().split('T')[0]}
                 required
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none focus:border-amber-500 [color-scheme:dark]"
               />
             </label>
 
@@ -172,7 +178,7 @@ export default function Kontaktai() {
                 value={registracija.laikas}
                 onChange={handleRegistracijosChange}
                 required
-                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
+                className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none focus:border-amber-500 [color-scheme:dark]"
               />
             </label>
 
@@ -184,7 +190,7 @@ export default function Kontaktai() {
                 onChange={handleRegistracijosChange}
                 rows="4"
                 placeholder="Trumpai aprašykite, kokių darbų reikia"
-                className="mt-1.5 w-full resize-y rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none placeholder:text-slate-500 focus:border-amber-500"
+                className="mt-1.5 w-full resize-y rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white caret-amber-400 outline-none placeholder:text-slate-500 focus:border-amber-500"
               />
             </label>
 
