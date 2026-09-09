@@ -45,6 +45,7 @@ export default function ServiceSlider() {
         <div className="lg:col-span-2 relative h-[380px] rounded-2xl overflow-hidden border border-emerald-800/70 bg-emerald-950 shadow-2xl group">
           
           <img 
+            key={dabartineSlaida.id}
             src={dabartineSlaida.nuotrauka} 
             alt={dabartineSlaida.pavadinimas}
             className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"

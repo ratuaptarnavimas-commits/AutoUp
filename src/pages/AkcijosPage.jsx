@@ -1,41 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useAdmin } from "@/context/AdminContext";
 
-const INITIAL_AKCIJOS = [
-  {
-    id: 1,
-    ikona: "🔥",
-    pavadinimas: "Padangų Montavimas + Pakabos Patikra",
-    aprasymas:
-      "Užsisakius pilną 4 ratų montavimo ir balansavimo komplektą – nemokama išsami važiuoklės patikra bei slėgio suderinimas.",
-    kaina: "Nuo 30€",
-    galioja: "Šią savaitę",
-  },
-  {
-    id: 2,
-    ikona: "🛢️",
-    pavadinimas: "Variklio Alyvos Keitimo Akcija",
-    aprasymas:
-      "Keičiant variklio alyvą ir visus filtrus (alyvos, oro, salono) – kompiuterinė diagnostika ir skysčių lygio patikra NEMOKAMAI.",
-    kaina: "Nuo 25€",
-    galioja: "Iki mėnesio pabaigos",
-  },
-  {
-    id: 3,
-    ikona: "🔍",
-    pavadinimas: "Kompiuterinė Diagnostika ir Klaidos",
-    aprasymas:
-      "Pilnas elektroninių sistemų skenavimas, klaidų trynimas ir išsami meistro konsultacija prieš važiuoklės remontą.",
-    kaina: "15€",
-    galioja: "Nuolatinė akcija",
-  },
-];
+const INITIAL_AKCIJOS = [];
 
 export default function AkcijosPage() {
   const { isAdmin } = useAdmin();
   // Įkrauname iš localStorage arba naudojame pradinius duomenis
   const [akcijos, setAkcijos] = useState(() => {
-    const saved = localStorage.getItem("autoup_akcijos");
+    const saved = localStorage.getItem("autoup_akcijos_v2");
     return saved ? JSON.parse(saved) : INITIAL_AKCIJOS;
   });
 
@@ -52,7 +24,7 @@ export default function AkcijosPage() {
 
   // Išsaugome pakeitimus į localStorage
   useEffect(() => {
-    localStorage.setItem("autoup_akcijos", JSON.stringify(akcijos));
+    localStorage.setItem("autoup_akcijos_v2", JSON.stringify(akcijos));
   }, [akcijos]);
 
   // Forma: Pridėti arba Išsaugoti redagavimą
