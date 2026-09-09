@@ -170,7 +170,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
                 id="name"
                 name="name"
                 placeholder="Vardenis Pavardenis"
-                className={`pl-10 ${errors.name ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                className={`pl-10 bg-white text-slate-900 caret-blue-600 placeholder:text-slate-400 ${errors.name ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 value={formData.name}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -187,7 +187,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
                 id="phone"
                 name="phone"
                 placeholder="+370 600 00000"
-                className={`pl-10 ${errors.phone ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                className={`pl-10 bg-white text-slate-900 caret-blue-600 placeholder:text-slate-400 ${errors.phone ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 value={formData.phone}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -205,7 +205,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
                 name="email"
                 type="email"
                 placeholder="pastas@pavyzdys.lt"
-                className={`pl-10 ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                className={`pl-10 bg-white text-slate-900 caret-blue-600 placeholder:text-slate-400 ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 value={formData.email}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -224,7 +224,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
                 type="time"
                 min="08:00"
                 max="18:00"
-                className={`pl-10 ${errors.time ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                className={`pl-10 bg-white text-slate-900 caret-blue-600 [color-scheme:light] ${errors.time ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
                 value={formData.time}
                 onChange={handleChange}
                 disabled={isLoading}
@@ -242,7 +242,7 @@ const BookingForm = ({ date, onClose, onSuccess }) => {
                 id="notes"
                 name="notes"
                 placeholder="Automobilio modelis, pageidaujami darbai..."
-                className="pl-10 min-h-[80px]"
+                className="pl-10 min-h-[80px] bg-white text-slate-900 caret-blue-600 placeholder:text-slate-400"
                 value={formData.notes}
                 onChange={handleChange}
                 disabled={isLoading}
