@@ -19,6 +19,9 @@ export const sendBookingEmail = async (bookingDetails) => {
         template_params: {
           to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL || "ratuaptarnavimas@gmail.com",
           subject: "Nauja rezervacija iš AutoUp",
+          title: "Nauja rezervacija iš AutoUp",
+          name: bookingDetails.Vardas,
+          email: bookingDetails.Email,
           from_name: bookingDetails.Vardas,
           reply_to: bookingDetails.Email,
           vardas: bookingDetails.Vardas,
