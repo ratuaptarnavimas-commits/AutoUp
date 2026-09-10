@@ -14,11 +14,9 @@ export default function Navbar() {
         {/* LOGO */}
         <Link to="/" className="group flex items-center gap-2.5" aria-label="AutoUp pagrindinis puslapis">
           <span className="flex h-12 w-24 items-center overflow-hidden rounded-xl border border-emerald-700/60 bg-[#06150d] shadow-lg shadow-black/20 transition-transform group-hover:scale-105">
-            <img
-              src="/images/logo.png"
-              alt="AutoUp automobilių servisas"
-              className="h-full w-full object-cover object-center mix-blend-screen"
-            />
+            <span className="w-full text-center text-2xl font-black italic tracking-tight">
+              <span className="text-white">Auto</span><span className="text-red-500">Up</span>
+            </span>
           </span>
         </Link>
 

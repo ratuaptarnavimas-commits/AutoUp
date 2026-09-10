@@ -43,7 +43,7 @@ const Header = () => {
             >
               <Link to="/" className="flex items-center space-x-3 group">
                  <img 
-                   src="https://horizons-cdn.hostinger.com/f533b165-5105-4cde-bbbe-298474d58916/5b852305d247944fec4fdbb3c6ba6334.png" 
+                   src="/images/logo.png" 
                    alt="AutoUp Logo - Drive Forward" 
                    className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                  />
