@@ -29,7 +29,7 @@ export const paslaugosData = [
       vaziuokle2
     ],
     darbai: [
-      "NEMOKAMA važiuoklės patikra",
+      "Važiuoklės patikra – 20 €",
       "Amortizatorių keitimas",
       "Amortizatorių spyruoklės keitimas",
       "Amortizatoriaus apsaugos keitimas",
