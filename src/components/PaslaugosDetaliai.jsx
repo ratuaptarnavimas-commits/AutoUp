@@ -76,12 +76,6 @@ export default function PaslaugosDetaliai() {
             <h2 className="text-xl font-bold text-amber-500 mb-4">Važiuoklės ir pakabos remonto kainos</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm text-slate-200">
-                <thead className="text-white">
-                  <tr>
-                    <th className="p-3 font-bold">Paslauga</th>
-                    <th className="p-3 font-bold whitespace-nowrap">Siūloma AutoUp darbo kaina</th>
-                  </tr>
-                </thead>
                 <tbody>
                   <tr>
                     <th className="p-3 font-semibold">✓ Važiuoklės patikra – 20 €</th>
