@@ -147,6 +147,9 @@ export default function PaslaugosDetaliai() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-4 text-sm italic leading-relaxed text-slate-400">
+              Diagnostikos kaina priklauso nuo automobilio, gedimo sudėtingumo ir diagnostikai skirto laiko. Sudėtingesni gedimų paieškos darbai – nuo 30 €/val.
+            </p>
           </section>
         )}
 
