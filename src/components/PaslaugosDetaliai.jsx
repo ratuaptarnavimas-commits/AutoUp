@@ -108,6 +108,28 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "stabdziu-remontas" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Stabdžių sistemos remonto kainos</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-200">
+                <tbody>
+                  <tr><th className="p-3 font-semibold">Stabdžių kaladėlių keitimas</th><td className="p-3">nuo 30 € / ašis</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių diskų + kaladėlių keitimas</th><td className="p-3">nuo 50 € / ašis</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių žarnelės keitimas</th><td className="p-3">nuo 20 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių vamzdelio keitimas / remontas</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Rankinio stabdžio reguliavimas</th><td className="p-3">nuo 15 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Rankinio stabdžio troso keitimas</th><td className="p-3">nuo 25 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių suporto keitimas</th><td className="p-3">nuo 35 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių suporto restauravimas / perrinkimas</th><td className="p-3">nuo 50 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių skysčio keitimas + sistemos nuorinimas</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabdžių sistemos nuorinimas</th><td className="p-3">nuo 20 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
