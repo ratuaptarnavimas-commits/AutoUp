@@ -2,11 +2,13 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ServiceSlider from "./components/ServiceSlider";
+import TireDisposalCard from "./components/TireDisposalCard";
 import Paslaugos from "./components/Paslaugos";
 import PaslaugosDetaliai from "./components/PaslaugosDetaliai";
 import AkcijosPage from "./pages/AkcijosPage";
 import AutoprekesPage from "./pages/AutoprekesPage";
 import Kontaktai from "./components/Kontaktai";
+import TireDisposalPage from "./pages/TireDisposalPage";
 import BoltsBackground from "./components/BoltsBackground";
 import PasswordRecoveryModal from "./components/auth/PasswordRecoveryModal";
 import SchemaOrg from "./components/seo/SchemaOrg";
@@ -32,6 +34,7 @@ function App() {
             element={
               <>
                 <ServiceSlider />
+                <TireDisposalCard />
               </>
             }
           />
@@ -40,6 +43,7 @@ function App() {
           <Route path="/akcijos" element={<AkcijosPage />} />
           <Route path="/autoprekes" element={<AutoprekesPage />} />
           <Route path="/kontaktai" element={<Kontaktai />} />
+          <Route path="/padangu-priemimas" element={<TireDisposalPage />} />
         </Routes>
       </div>
     </div>
