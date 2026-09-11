@@ -71,6 +71,46 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "vaziuokles-remontas" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Važiuoklės ir pakabos remonto kainos</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-200">
+                <thead className="border-b border-emerald-800/70 text-white">
+                  <tr>
+                    <th className="p-3 font-bold">Paslauga</th>
+                    <th className="p-3 font-bold whitespace-nowrap">Siūloma AutoUp darbo kaina</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-emerald-900/70">
+                  <tr><th className="p-3 font-semibold">Važiuoklės patikra</th><td className="p-3">NEMOKAMA remontuojant / 20 € be remonto</td></tr>
+                  <tr><th className="p-3 font-semibold">Amortizatoriaus keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Amortizatoriaus spyruoklės keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Amortizatoriaus apsaugos keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Pusašio keitimas</th><td className="p-3">nuo 35 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Pusašio šarnyro (granatos) keitimas</th><td className="p-3">nuo 40 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Granatos apsaugos keitimas</th><td className="p-3">nuo 40 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Pusašio pakabinamojo guolio keitimas</th><td className="p-3">nuo 45 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Rato guolio keitimas</th><td className="p-3">nuo 45 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Rato stebulės keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Sailenblokų keitimas</th><td className="p-3">nuo 30 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Šarnyro keitimas</th><td className="p-3">nuo 25 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Svirties (šakės) keitimas</th><td className="p-3">nuo 30 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabilizatoriaus įvorės keitimas</th><td className="p-3">nuo 20 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Stabilizatoriaus traukės keitimas</th><td className="p-3">nuo 20 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Traukės keitimas</th><td className="p-3">nuo 25 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Vairo traukės keitimas</th><td className="p-3">nuo 30 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Vairo traukės antgalio keitimas</th><td className="p-3">nuo 25 € / vnt.</td></tr>
+                  <tr><th className="p-3 font-semibold">Vairo traukės apsaugos keitimas</th><td className="p-3">nuo 30 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-sm italic leading-relaxed text-slate-400">
+              Nurodytos kainos – tik už darbus. Dalys ir kitos medžiagos į kainą neįskaičiuotos.
+            </p>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
