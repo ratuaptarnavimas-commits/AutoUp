@@ -102,9 +102,6 @@ export default function PaslaugosDetaliai() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-4 text-sm italic leading-relaxed text-slate-400">
-              Nurodytos kainos – tik už darbus. Dalys ir kitos medžiagos į kainą neįskaičiuotos.
-            </p>
             <p className="mt-2 text-sm italic leading-relaxed text-slate-400">
               Nurodytos darbų kainos yra orientacinės. Galutinė kaina priklauso nuo automobilio konstrukcijos, būklės ir darbų sudėtingumo. Detalės į kainą neįskaičiuotos.
             </p>
