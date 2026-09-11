@@ -133,6 +133,23 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "kompiuterine-diagnostika" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Kompiuterinės diagnostikos kainos</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-200">
+                <tbody>
+                  <tr><th className="p-3 font-semibold">Klaidų kodų (DTC) nuskaitymas ir trynimas</th><td className="p-3">nuo 20 €</td></tr>
+                  <tr><th className="p-3 font-semibold">ABS, ESP, Airbag ir kitų blokų diagnostika</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Gedimų priežasčių nustatymas ir konsultacija</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Variklio parametrų stebėjimas realiu laiku</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Serviso pranešimų nustatymas / nunulinimas</th><td className="p-3">nuo 15 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
