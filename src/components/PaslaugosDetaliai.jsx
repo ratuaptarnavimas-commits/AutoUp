@@ -127,6 +127,9 @@ export default function PaslaugosDetaliai() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-4 text-sm italic leading-relaxed text-slate-400">
+              Kainos nurodytos tik už darbą. Detalės į kainą neįskaičiuotos. Galutinė darbų kaina priklauso nuo automobilio modelio, konstrukcijos, būklės ir remonto sudėtingumo.
+            </p>
           </section>
         )}
 
