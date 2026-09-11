@@ -3,14 +3,14 @@
   "short_name": "AutoUp",
   "icons": [
     {
-      "src": "/images/logo.png",
+      "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
-      "src": "/images/logo.png",
+      "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/png"
+      "type": "image/svg+xml"
     }
   ],
   "theme_color": "#1a1a1a",
