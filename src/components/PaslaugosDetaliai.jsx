@@ -172,6 +172,23 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "technine-pagalba" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Automobilio paruošimo TA kainos</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-200">
+                <tbody>
+                  <tr><th className="p-3 font-semibold">Pakabos ir vairavimo mechanizmo patikra</th><td className="p-3">20 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Pakabos ir vairavimo mechanizmo patikra atliekant remontą</th><td className="p-3">NEMOKAMAI</td></tr>
+                  <tr><th className="p-3 font-semibold">Skysčių nuotėkio patikra</th><td className="p-3">nuo 20 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Slenksčių remonto darbai</th><td className="p-3">nuo 50 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Trūkumų šalinimas prieš TA</th><td className="p-3">pagal atliekamus darbus</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
