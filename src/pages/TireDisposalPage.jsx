@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { sendTireDisposalEmail } from "../services/web3formsService";
 
 const PRICE_PER_TIRE = 3;
 const initialForm = {
@@ -25,6 +26,8 @@ function getToday() {
 export default function TireDisposalPage() {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
   const [errors, setErrors] = useState({});
   const today = useMemo(getToday, []);
   const price = form.source === "Kitur" ? (Number(form.quantity) || 0) * PRICE_PER_TIRE : 0;
@@ -34,6 +37,7 @@ export default function TireDisposalPage() {
     setForm((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }));
     setErrors((current) => ({ ...current, [name]: "" }));
     setSubmitted(false);
+    setSubmissionError("");
   };
 
   const validate = () => {
@@ -49,7 +53,7 @@ export default function TireDisposalPage() {
     return nextErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const nextErrors = validate();
     if (Object.keys(nextErrors).length > 0) {
@@ -58,7 +62,18 @@ export default function TireDisposalPage() {
       return;
     }
     setErrors({});
-    setSubmitted(true);
+    setSubmissionError("");
+    setIsSending(true);
+
+    const result = await sendTireDisposalEmail({ ...form, price });
+    setIsSending(false);
+
+    if (result.success) {
+      setForm(initialForm);
+      setSubmitted(true);
+    } else {
+      setSubmissionError(result.message);
+    }
   };
 
   const fieldClass = "mt-2 w-full rounded-xl border border-emerald-700/80 bg-emerald-950/80 px-4 py-3 text-white placeholder:text-emerald-300/50 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30";
@@ -173,9 +188,11 @@ export default function TireDisposalPage() {
               </label>
               {errors.confirmed && <p className="-mt-4 text-sm text-red-300">{errors.confirmed}</p>}
 
-              <button type="submit" className="w-full rounded-xl bg-amber-500 px-6 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:w-auto">
-                Registruoti pridavimą
+              <button type="submit" disabled={isSending} className="w-full rounded-xl bg-amber-500 px-6 py-3.5 text-sm font-black uppercase tracking-wide text-black transition-colors hover:bg-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
+                {isSending ? "Siunčiama..." : "Registruoti pridavimą"}
               </button>
+
+              {submissionError && <p role="alert" className="rounded-xl border border-red-500/50 bg-red-500/10 p-4 text-sm font-bold text-red-100">{submissionError}</p>}
 
               {submitted && (
                 <p role="status" className="rounded-xl border border-emerald-500/50 bg-emerald-500/10 p-4 text-sm font-bold text-emerald-100">
