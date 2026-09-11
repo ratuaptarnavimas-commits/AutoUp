@@ -153,6 +153,22 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "ischeckio-remontas" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Išmetimo sistemos remonto kainos</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-slate-200">
+                <tbody>
+                  <tr><th className="p-3 font-semibold">Duslintuvų suvirinimas ir sandarinimas</th><td className="p-3">nuo 30 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Duslintuvo laikiklių ir gumų keitimas</th><td className="p-3">nuo 15 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Išmetimo sistemos gofrų keitimas</th><td className="p-3">nuo 40 €</td></tr>
+                  <tr><th className="p-3 font-semibold">Atskirų išmetimo vamzdžių sekcijų keitimas</th><td className="p-3">nuo 40 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
