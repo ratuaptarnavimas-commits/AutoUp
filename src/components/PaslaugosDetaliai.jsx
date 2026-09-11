@@ -65,6 +65,9 @@ export default function PaslaugosDetaliai() {
                 <strong className="whitespace-nowrap text-white">nuo 15 €</strong>
               </p>
             </div>
+            <p className="mt-4 text-sm italic leading-relaxed text-slate-400">
+              Nurodytos kainos – tik už darbus. Alyva, filtrai ir kitos medžiagos į kainą neįskaičiuotos.
+            </p>
           </section>
         )}
 
