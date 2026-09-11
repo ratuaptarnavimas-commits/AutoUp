@@ -118,7 +118,7 @@ export const paslaugosData = [
       "Klaidų kodų (DTC) nuskaitymas ir trynimas",
       "Variklio parametrų stebėjimas realiu laiku",
       "ABS, ESP, Airbag ir kitų blokų diagnostika",
-      "Serviso pranešimų nustatymas",
+      "Serviso intervalo nustatymas / nunulinimas",
       "Gedimų priežasčių nustatymas ir konsultacija"
     ]
   },
