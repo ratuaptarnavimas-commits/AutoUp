@@ -87,6 +87,7 @@ export const sendBookingEmail = async (bookingDetails) => {
 };
 
 export const sendTireDisposalEmail = async (registration) => {
+  const recipient = "ratuaptarnavimas@gmail.com";
   const message = [
     `Vardas: ${registration.name}`,
     `Telefonas: ${registration.phone}`,
@@ -112,7 +113,8 @@ export const sendTireDisposalEmail = async (registration) => {
         template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
         template_params: {
-          to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL || "ratuaptarnavimas@gmail.com",
+          to_email: recipient,
+          recipient,
           subject: "Nauja naudotų padangų pridavimo registracija",
           title: "Nauja naudotų padangų pridavimo registracija",
           name: registration.name,
@@ -138,8 +140,10 @@ export const sendTireDisposalEmail = async (registration) => {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: "438c8f64-a249-4b1c-8a8d-5f11b5474c39",
+          to_email: recipient,
           subject: "Nauja naudotų padangų pridavimo registracija",
           botcheck: "",
+          from_name: "AutoUP padangų priėmimas",
           email: registration.email,
           name: registration.name,
           message,
