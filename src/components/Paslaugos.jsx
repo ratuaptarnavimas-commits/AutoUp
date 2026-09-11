@@ -150,11 +150,12 @@ export const paslaugosData = [
       technineApziura2
     ],
     darbai: [
-      "Pakabos ir vairavimo mechanizmo patikra",
+      "Pakabos ir vairavimo mechanizmo patikra – 20 €",
+      "Pakabos ir vairavimo mechanizmo patikra atliekant remontą – NEMOKAMAI",
       "Šviesų ir žibintų reguliavimas - Ruošiama",
-      "Skysčių nuotėkio patikra",
-      "Trūkumų šalinimas prieš TA",
-      "Slenksčių darbai"
+      "Skysčių nuotėkio patikra – nuo 20 €",
+      "Trūkumų šalinimas prieš TA – pagal atliekamus darbus",
+      "Slenksčių remonto darbai – nuo 50 €"
     ]
   },
   {
