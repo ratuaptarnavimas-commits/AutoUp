@@ -83,7 +83,10 @@ export default function PaslaugosDetaliai() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-emerald-900/70">
-                  <tr><th className="p-3 font-semibold">Važiuoklės patikra</th><td className="p-3">NEMOKAMA remontuojant / 20 € be remonto</td></tr>
+                  <tr>
+                    <th className="p-3 font-semibold">✓ Važiuoklės patikra – 20 €</th>
+                    <td className="p-3">✓ Atliekant remontą AutoUP – patikra NEMOKAMA</td>
+                  </tr>
                   <tr><th className="p-3 font-semibold">Amortizatoriaus keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
                   <tr><th className="p-3 font-semibold">Amortizatoriaus spyruoklės keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
                   <tr><th className="p-3 font-semibold">Amortizatoriaus apsaugos keitimas</th><td className="p-3">nuo 40 € / vnt.</td></tr>
