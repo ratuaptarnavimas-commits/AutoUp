@@ -40,6 +40,34 @@ export default function PaslaugosDetaliai() {
           </section>
         )}
 
+        {paslauga.id === "tepalu-keitimas" && (
+          <section className="mb-8 rounded-2xl border border-emerald-800/70 bg-emerald-950/90 backdrop-blur-sm p-6">
+            <h2 className="text-xl font-bold text-amber-500 mb-4">Alyva ir filtrai</h2>
+            <div className="space-y-3 text-slate-200">
+              <p className="flex justify-between gap-4 border-b border-emerald-800/60 pb-2">
+                <span>Alyvos + alyvos filtro keitimas</span>
+                <strong className="whitespace-nowrap text-white">nuo 25 €</strong>
+              </p>
+              <p className="flex justify-between gap-4 border-b border-emerald-800/60 pb-2">
+                <span>Alyvos + visų filtrų keitimas</span>
+                <strong className="whitespace-nowrap text-white">nuo 40 €</strong>
+              </p>
+              <p className="flex justify-between gap-4 border-b border-emerald-800/60 pb-2">
+                <span>Oro filtro keitimas</span>
+                <strong className="whitespace-nowrap text-white">nuo 10 €</strong>
+              </p>
+              <p className="flex justify-between gap-4 border-b border-emerald-800/60 pb-2">
+                <span>Salono filtro keitimas</span>
+                <strong className="whitespace-nowrap text-white">nuo 10 €</strong>
+              </p>
+              <p className="flex justify-between gap-4">
+                <span>Kuro filtro keitimas</span>
+                <strong className="whitespace-nowrap text-white">nuo 15 €</strong>
+              </p>
+            </div>
+          </section>
+        )}
+
         {paslauga.nuotraukos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {paslauga.nuotraukos.map((imgSrc, index) => (
