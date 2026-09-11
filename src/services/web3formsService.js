@@ -88,13 +88,19 @@ export const sendBookingEmail = async (bookingDetails) => {
 
 export const sendTireDisposalEmail = async (registration) => {
   const recipient = "ratuaptarnavimas@gmail.com";
+  const vehicleDetails = [
+    `Padangų informacija: ${registration.tireInfo || "Nenurodyta"}`,
+    `Padangų kiekis: ${registration.quantity}`,
+    `Kur įsigytos padangos: ${registration.source}`,
+    `Numatoma priėmimo kaina: ${registration.price} €`,
+  ].join("\n");
   const message = [
     `Vardas: ${registration.name}`,
     `Telefonas: ${registration.phone}`,
     `El. paštas: ${registration.email || "Nenurodyta"}`,
     `Padangų kiekis: ${registration.quantity}`,
     `Kur įsigytos padangos: ${registration.source}`,
-    `Automobilio / padangų informacija: ${registration.tireInfo || "Nenurodyta"}`,
+    vehicleDetails,
     `Pageidaujama data: ${registration.date}`,
     `Pageidaujamas laikas: ${registration.time}`,
     `Numatoma priėmimo kaina: ${registration.price} €`,
@@ -124,10 +130,10 @@ export const sendTireDisposalEmail = async (registration) => {
           Vardas: registration.name,
           Telefonas: registration.phone,
           Email: registration.email || "Nenurodyta",
-          Automobilis: registration.tireInfo || "Nenurodyta",
+          Automobilis: vehicleDetails,
           Data: registration.date,
           Laikas: registration.time,
-          Papildoma: message,
+          Papildoma: registration.notes || "Nenurodyta",
           formos_tipas: "Naudotų padangų priėmimas",
           message,
           ...registration,
