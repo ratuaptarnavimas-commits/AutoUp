@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from "../static/image/ratas1.jpg";
+import backgroundImage from "../static/image/webfonas-1.jpg";
 
 const BoltsBackground = () => (
   <div
