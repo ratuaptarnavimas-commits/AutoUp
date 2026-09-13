@@ -22,7 +22,7 @@ export default function Navbar() {
 
         {/* MENIU NUORODOS */}
         <div className="order-3 w-full sm:order-none sm:w-auto flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm font-bold uppercase tracking-wider">
-          <Link to="/" className="hover:text-amber-500 transition-colors">
+          <Link to="/" className="border-b-2 border-emerald-400 pb-2 text-emerald-300 hover:text-amber-500 transition-colors">
             PAGRINDINIS
           </Link>
           
@@ -40,10 +40,6 @@ export default function Navbar() {
 
           <Link to="/kontaktai" className="hover:text-amber-500 transition-colors">
             KONTAKTAI
-          </Link>
-
-          <Link to="/autoprekes" className="text-emerald-100 hover:text-amber-500 transition-colors">
-            AUTOPREKĖS <span className="text-amber-400">• RUOŠIAMA</span>
           </Link>
         </div>
 

@@ -38,11 +38,11 @@ export default function ServiceSlider() {
   const dabartineSlaida = slaidos[esamasIndex];
 
   return (
-    <section className="max-w-[1600px] mx-auto px-4 py-8">
+    <section className="max-w-[1240px] mx-auto px-4 py-5 sm:px-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         {/* KAIRĖ DALIS: Karuselė su įstriža kortele */}
-        <div className="lg:col-span-2 relative h-[380px] rounded-2xl overflow-hidden border border-emerald-800/70 bg-emerald-950 shadow-2xl group">
+        <div className="lg:col-span-2 relative h-[288px] rounded-2xl overflow-hidden border border-emerald-800/70 bg-emerald-950 shadow-2xl group">
           
           <img 
             key={dabartineSlaida.id}
@@ -54,7 +54,7 @@ export default function ServiceSlider() {
           <div className="absolute inset-0 z-[1] bg-gradient-to-r from-emerald-950/90 via-emerald-950/60 to-emerald-950/30"></div>
 
           <div 
-            className="absolute inset-y-0 left-0 w-full md:w-[58%] p-8 flex flex-col justify-between z-10"
+            className="absolute inset-y-0 left-0 w-full md:w-[58%] p-6 flex flex-col justify-between z-10"
           >
             <div>
               <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4 leading-tight text-white">
@@ -93,7 +93,7 @@ export default function ServiceSlider() {
 
         {/* DEŠINĖ DALIS: Greitos registracijos kortelės */}
         <div className="flex flex-col gap-4 justify-between">
-          <div className="bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl p-6 text-emerald-950 flex flex-col justify-between h-[180px] shadow-lg">
+          <div className="bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl p-5 text-emerald-950 flex flex-col justify-between h-[137px] shadow-lg">
             <div>
               <h3 className="text-2xl font-black mb-1">Automobilio remontas</h3>
               <p className="text-xs font-semibold text-slate-900/80">Registruokitės apžiūrai ar meistro konsultacijai iš anksto.</p>
@@ -107,7 +107,7 @@ export default function ServiceSlider() {
             </a>
           </div>
 
-          <div className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-6 text-white flex flex-col justify-between h-[180px] shadow-lg">
+          <div className="bg-emerald-950/90 backdrop-blur-sm border border-emerald-800/70 rounded-2xl p-5 text-white flex flex-col justify-between h-[137px] shadow-lg">
             <div>
               <h3 className="text-xl font-bold mb-1 text-amber-500">Padangų montavimas & Balansavimas</h3>
               <p className="text-xs text-slate-400">Greitas priėmimas sezono metu.</p>
