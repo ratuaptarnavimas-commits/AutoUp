@@ -1,12 +1,12 @@
 import React from "react";
-import boltsBackground from "../static/image/autoup-bolts-background.webp";
+import backgroundImage from "../static/image/ratas2.jpg";
 
 const BoltsBackground = () => (
   <div
     aria-hidden="true"
     className="pointer-events-none fixed inset-0 z-0 bg-[#010b04]"
     style={{
-      backgroundImage: `linear-gradient(rgba(0, 10, 3, 0.16), rgba(0, 10, 3, 0.38)), url(${boltsBackground})`,
+      backgroundImage: `linear-gradient(rgba(0, 10, 3, 0.58), rgba(0, 10, 3, 0.78)), url(${backgroundImage})`,
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
