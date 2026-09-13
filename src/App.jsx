@@ -47,7 +47,7 @@ function App() {
                       <div className="absolute inset-0 bg-gradient-to-r from-emerald-950 via-emerald-950/90 to-emerald-950/10" />
                       <div className="relative z-10 max-w-[70%]">
                         <h2 className="text-xl font-black text-white sm:text-2xl">Automobilių dalys</h2>
-                        <p className="mt-1 text-sm leading-relaxed text-emerald-100">Prekiaujame automobilių dalimis įvairių markių automobiliams. Padedame parinkti tinkamas dalis pagal automobilį.</p>
+                        <p className="mt-1 text-sm leading-relaxed text-emerald-100">Prekiaujame automobilių dalimis įvairių markių automobiliams. Padedame parinkti tinkamas dalis pagal automobilį. Dalis galite įsigyti ir sumontuoti mūsų servise.</p>
                         <Link to="/kontaktai#registracija" className="mt-4 inline-flex items-center justify-center rounded-xl bg-amber-500 px-4 py-2.5 text-center text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-amber-400">
                           Teirautis dėl dalių
                         </Link>
