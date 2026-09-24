@@ -61,7 +61,8 @@ const formatPart = (part) => {
 };
 
 const createRecordBlock = (record) => ({
-  unbreakable: true,
+  // Allow long history entries to continue on the next page instead of blocking layout.
+  unbreakable: false,
   stack: [
     {
       columns: [
@@ -197,14 +198,16 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
   };
 
   const safeRegistrationNumber = registrationNumber.replace(/[^A-Z0-9-]/gi, "-");
-  try {
-    pdfMake
-      .createPdf(documentDefinition)
-      .download(`AutoUP-${safeRegistrationNumber}-istorija.pdf`);
-  } catch (error) {
-    console.error("PDF generation failed:", error);
-    throw error;
-  }
+  const fileName = `AutoUP-${safeRegistrationNumber}-istorija.pdf`;
+
+  return new Promise((resolve, reject) => {
+    try {
+      pdfMake.createPdf(documentDefinition).download(fileName, resolve);
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+      reject(error);
+    }
+  });
 };
 
 export default downloadVehicleHistoryPdf;
