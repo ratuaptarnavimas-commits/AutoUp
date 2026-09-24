@@ -207,7 +207,7 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
         : { text: "Aptarnavimo ir remonto įrašų nėra.", style: "emptyState" },
     ],
     styles: {
-      brand: { fontSize: 22, bold: true, italics: true, characterSpacing: -0.5 },
+      brand: { fontSize: 22, bold: true, characterSpacing: -0.5 },
       subtitle: { color: "#ffffff", fontSize: 9, bold: true, margin: [0, 2, 0, 0] },
       generated: { color: "#b9d3c3", fontSize: 7, margin: [0, 2, 0, 0] },
       headerSide: { color: "#f4bd24", fontSize: 8, bold: true, characterSpacing: 0.8, margin: [10, 4, 0, 0] },
@@ -226,7 +226,7 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
       recordCategory: { color: "#b67b00", fontSize: 10, bold: true },
       listValue: { color: "#18251f", fontSize: 9 },
       verified: { color: "#075633", fontSize: 9, bold: true },
-      emptyState: { color: "#526b5f", italics: true },
+      emptyState: { color: "#526b5f" },
       footer: { color: "#71847a", fontSize: 7 },
     },
   };
