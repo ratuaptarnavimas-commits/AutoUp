@@ -61,7 +61,7 @@ export default function VehicleHistoryPage() {
     try {
       await downloadVehicleHistoryPdf(searchResult);
     } catch (error) {
-      console.error("Nepavyko sugeneruoti automobilio istorijos PDF.", {
+      console.error("PDF generation failed:", error, {
         message: error?.message,
         code: error?.code,
         details: error?.details,

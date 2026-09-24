@@ -197,16 +197,14 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
   };
 
   const safeRegistrationNumber = registrationNumber.replace(/[^A-Z0-9-]/gi, "-");
-  return new Promise((resolve, reject) => {
-    try {
-      pdfMake.createPdf(documentDefinition).download(
-        `AutoUP-${safeRegistrationNumber}-istorija.pdf`,
-        resolve
-      );
-    } catch (error) {
-      reject(error);
-    }
-  });
+  try {
+    pdfMake
+      .createPdf(documentDefinition)
+      .download(`AutoUP-${safeRegistrationNumber}-istorija.pdf`);
+  } catch (error) {
+    console.error("PDF generation failed:", error);
+    throw error;
+  }
 };
 
 export default downloadVehicleHistoryPdf;
