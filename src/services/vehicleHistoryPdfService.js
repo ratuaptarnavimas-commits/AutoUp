@@ -16,6 +16,24 @@ const formatMileage = (value) => {
 
 const nonEmpty = (value) => value !== null && value !== undefined && String(value).trim() !== "";
 
+const loadLogoDataUrl = async () => {
+  const response = await fetch("/images/logo.png");
+  if (!response.ok) {
+    throw new Error(`Nepavyko įkelti AutoUP logotipo (${response.status}).`);
+  }
+
+  const buffer = await response.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunkSize = 0x8000;
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
+  }
+
+  return `data:image/png;base64,${btoa(binary)}`;
+};
+
 const addField = (label, value, options = {}) => {
   if (!nonEmpty(value)) return [];
 
@@ -78,11 +96,12 @@ const createRecordBlock = (record) => ({
   style: "recordBlock",
 });
 
-export const downloadVehicleHistoryPdf = (vehicle) => {
+export const downloadVehicleHistoryPdf = async (vehicle) => {
   if (!vehicle || !Array.isArray(vehicle.records)) {
     throw new Error("Automobilio istorijos duomenys nepasiekiami.");
   }
 
+  const logoDataUrl = await loadLogoDataUrl();
   const registrationNumber = String(vehicle.registrationNumber || "AUTOMOBILIS").trim();
   const records = vehicle.records
     .map((record, index) => ({ record, index }))
@@ -117,7 +136,7 @@ export const downloadVehicleHistoryPdf = (vehicle) => {
           widths: ["*"],
           body: [[{
             stack: [
-              { text: "AutoUP", style: "brand" },
+              { image: logoDataUrl, width: 118, fit: [118, 76], alignment: "left" },
               { text: "AUTOMOBILIO TECHNINĖS PRIEŽIŪROS IR REMONTO ISTORIJA", style: "title" },
             ],
           }]],
@@ -164,7 +183,6 @@ export const downloadVehicleHistoryPdf = (vehicle) => {
         : { text: "Aptarnavimo ir remonto įrašų nėra.", style: "emptyState" },
     ],
     styles: {
-      brand: { color: "#f4bd24", fontSize: 24, bold: true },
       title: { color: "#ffffff", fontSize: 11, bold: true, margin: [0, 4, 0, 0] },
       sectionTitle: { color: "#075633", fontSize: 13, bold: true, characterSpacing: 0.4 },
       fieldLabel: { color: "#557065", fontSize: 8, bold: true },
