@@ -16,24 +16,6 @@ const formatMileage = (value) => {
 
 const nonEmpty = (value) => value !== null && value !== undefined && String(value).trim() !== "";
 
-const loadLogoDataUrl = async () => {
-  const response = await fetch("/images/logo.png");
-  if (!response.ok) {
-    throw new Error(`Nepavyko įkelti AutoUP logotipo (${response.status}).`);
-  }
-
-  const buffer = await response.arrayBuffer();
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  const chunkSize = 0x8000;
-
-  for (let index = 0; index < bytes.length; index += chunkSize) {
-    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
-  }
-
-  return `data:image/png;base64,${btoa(binary)}`;
-};
-
 const addField = (label, value, options = {}) => {
   if (!nonEmpty(value)) return [];
 
@@ -45,6 +27,11 @@ const addField = (label, value, options = {}) => {
     columnGap: 8,
     margin: [0, 0, 0, 7],
   }];
+};
+
+const formatDate = (value) => {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[3]}.${match[2]}.${match[1]}` : String(value || "");
 };
 
 const addListField = (label, items, formatter = (item) => item) => {
@@ -74,25 +61,25 @@ const formatPart = (part) => {
 };
 
 const createRecordBlock = (record) => ({
-  unbreakable: false,
+  unbreakable: true,
   stack: [
     {
       columns: [
-        { text: record.date || "", style: "recordDate" },
+        { text: formatDate(record.date), style: "recordDate" },
         { text: formatMileage(record.mileage), style: "recordMileage", alignment: "right" },
       ],
-      margin: [0, 0, 0, 5],
+      margin: [0, 0, 0, 6],
     },
     { text: record.category || "", style: "recordCategory", margin: [0, 0, 0, 10] },
-    ...addField("Kliento problema / nusiskundimas", record.customerComplaint),
+    ...addField("Kliento nurodyta problema", record.customerComplaint),
     ...addListField("Atlikti darbai", record.workPerformed),
-    ...addListField("Panaudotos dalys", record.partsUsed, formatPart),
+    ...addListField("Naudotos / pakeistos dalys", record.partsUsed, formatPart),
     ...addListField("Panaudotos medžiagos", record.materialsUsed),
-    ...addField("Viešos pastabos", record.publicNotes),
-    ...addField("Atliko", record.performedBy),
+    ...addField("Pastabos", record.publicNotes),
+    ...addField("Atliko", record.performedBy || "AutoUP"),
     ...(record.verifiedByAutoup ? [{ text: "PATVIRTINTA AUTOUP", style: "verified", margin: [0, 3, 0, 0] }] : []),
   ],
-  margin: [0, 0, 0, 14],
+  margin: [0, 0, 0, 10],
   style: "recordBlock",
 });
 
@@ -101,7 +88,6 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
     throw new Error("Automobilio istorijos duomenys nepasiekiami.");
   }
 
-  const logoDataUrl = await loadLogoDataUrl();
   const registrationNumber = String(vehicle.registrationNumber || "AUTOMOBILIS").trim();
   const records = vehicle.records
     .map((record, index) => ({ record, index }))
@@ -125,21 +111,25 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
     },
     footer: (currentPage, pageCount) => ({
       columns: [
-        { text: "Automobilio techninės priežiūros ir remonto istorija užfiksuota AutoUP sistemoje.", style: "footer" },
+        { text: "AutoUP • Automobilio techninės priežiūros istorija", style: "footer" },
         { text: `${currentPage} / ${pageCount}`, style: "footer", alignment: "right" },
       ],
-      margin: [42, 10, 42, 0],
+      margin: [42, 8, 42, 0],
     }),
     content: [
       {
         table: {
-          widths: ["*"],
-          body: [[{
-            stack: [
-              { image: logoDataUrl, width: 118, fit: [118, 76], alignment: "left" },
-              { text: "AUTOMOBILIO TECHNINĖS PRIEŽIŪROS IR REMONTO ISTORIJA", style: "title" },
-            ],
-          }]],
+          widths: ["*", "auto"],
+          body: [[
+            {
+              stack: [
+                { text: [{ text: "Auto", color: "#ffffff" }, { text: "UP", color: "#e53935" }], style: "brand" },
+                { text: "Techninės priežiūros ir remonto istorija", style: "subtitle" },
+                { text: "Dokumentas sugeneruotas AutoUP sistemoje", style: "generated" },
+              ],
+            },
+            { text: "AUTOMOBILIO\nISTORIJA", style: "headerSide", alignment: "right" },
+          ]],
         },
         layout: {
           fillColor: () => "#063b27",
@@ -147,48 +137,55 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
           vLineWidth: () => 0,
           paddingLeft: () => 18,
           paddingRight: () => 18,
-          paddingTop: () => 16,
-          paddingBottom: () => 16,
+          paddingTop: () => 11,
+          paddingBottom: () => 11,
         },
-        margin: [0, 0, 0, 20],
+        margin: [0, 0, 0, 18],
       },
-      { text: "AUTOMOBILIO DUOMENYS", style: "sectionTitle" },
+      { text: "AUTOMOBILIO DUOMENYS", style: "sectionTitle", margin: [0, 0, 0, 8] },
       {
-        table: {
-          widths: ["*", "*"],
-          body: [
-            [
-              { stack: [...addField("Markė", vehicle.make), ...addField("Modelis", vehicle.model), ...addField("Variklis", vehicle.engine)] },
-              { stack: [...addField("Pagaminimo metai", vehicle.year), ...addField("Valstybinis numeris", registrationNumber), ...addField("VIN", vehicle.vin)] },
-            ],
-          ],
-        },
-        layout: {
-          fillColor: () => "#eef5f0",
-          hLineColor: () => "#cbded2",
-          vLineColor: () => "#cbded2",
-          hLineWidth: () => 0.6,
-          vLineWidth: () => 0.6,
-          paddingLeft: () => 12,
-          paddingRight: () => 12,
-          paddingTop: () => 12,
-          paddingBottom: () => 8,
-        },
-        margin: [0, 0, 0, 20],
+        stack: [
+          { text: `${vehicle.make || ""} ${vehicle.model || ""}`.trim(), style: "vehicleName" },
+          { text: vehicle.engine || "", style: "vehicleEngine", margin: [0, 2, 0, 10] },
+          {
+            table: {
+              widths: ["auto", "*", "auto", "*"],
+              body: [
+                [
+                  { text: "Valstybinis numeris", style: "infoLabel" }, { text: registrationNumber, style: "infoValue" },
+                  { text: "VIN", style: "infoLabel" }, { text: vehicle.vin || "", style: "infoValue" },
+                ],
+                [
+                  { text: "Pagaminimo metai", style: "infoLabel" }, { text: nonEmpty(vehicle.year) ? String(vehicle.year) : "", style: "infoValue" },
+                  { text: "Paskutinė užfiksuota rida", style: "infoLabel" }, { text: formatMileage(latestRecordWithMileage?.mileage) || "Nenurodyta", style: "infoValue" },
+                ],
+              ],
+            },
+            layout: "noBorders",
+          },
+        ],
+        style: "vehicleCard",
       },
-      ...addField("Paskutinė užfiksuota rida", formatMileage(latestRecordWithMileage?.mileage), { valueStyle: "lastMileage" }),
-      { text: "APTARNAVIMO IR REMONTO ISTORIJA", style: "sectionTitle", margin: [0, 12, 0, 10] },
+      { text: "APTARNAVIMO IR REMONTO ISTORIJA", style: "sectionTitle", margin: [0, 18, 0, 10] },
       records.length
         ? records.map(createRecordBlock)
         : { text: "Aptarnavimo ir remonto įrašų nėra.", style: "emptyState" },
     ],
     styles: {
-      title: { color: "#ffffff", fontSize: 11, bold: true, margin: [0, 4, 0, 0] },
-      sectionTitle: { color: "#075633", fontSize: 13, bold: true, characterSpacing: 0.4 },
+      brand: { fontSize: 22, bold: true, italics: true, characterSpacing: -0.5 },
+      subtitle: { color: "#ffffff", fontSize: 9, bold: true, margin: [0, 2, 0, 0] },
+      generated: { color: "#b9d3c3", fontSize: 7, margin: [0, 2, 0, 0] },
+      headerSide: { color: "#f4bd24", fontSize: 8, bold: true, characterSpacing: 0.8, margin: [10, 4, 0, 0] },
+      sectionTitle: { color: "#075633", fontSize: 12, bold: true, characterSpacing: 0.4 },
+      vehicleCard: { fillColor: "#eef5f0", margin: [0, 0, 0, 0] },
+      vehicleName: { color: "#12271d", fontSize: 20, bold: true },
+      vehicleEngine: { color: "#b67b00", fontSize: 11, bold: true },
+      infoLabel: { color: "#557065", fontSize: 7.5, bold: true, margin: [0, 4, 8, 4] },
+      infoValue: { color: "#18251f", fontSize: 9, margin: [0, 4, 12, 4] },
       fieldLabel: { color: "#557065", fontSize: 8, bold: true },
       fieldValue: { color: "#18251f", fontSize: 9 },
       lastMileage: { color: "#075633", fontSize: 11, bold: true },
-      recordBlock: { fillColor: "#f7faf8", margin: [0, 0, 0, 14] },
+      recordBlock: { fillColor: "#f7faf8", margin: [0, 0, 0, 10] },
       recordDate: { color: "#075633", fontSize: 12, bold: true },
       recordMileage: { color: "#526b5f", fontSize: 10, bold: true },
       recordCategory: { color: "#b67b00", fontSize: 10, bold: true },
