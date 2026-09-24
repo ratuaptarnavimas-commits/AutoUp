@@ -16,23 +16,6 @@ const formatMileage = (value) => {
 
 const nonEmpty = (value) => value !== null && value !== undefined && String(value).trim() !== "";
 
-const downloadPdfBlob = async (pdfDocument, fileName) => {
-  const timeout = new Promise((_, reject) => {
-    setTimeout(() => reject(new Error("PDF generavimas užtruko per ilgai.")), 30000);
-  });
-  const blob = await Promise.race([pdfDocument.getBlob(), timeout]);
-  const objectUrl = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-
-  anchor.href = objectUrl;
-  anchor.download = fileName;
-  anchor.rel = "noopener";
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-};
-
 const addField = (label, value, options = {}) => {
   if (!nonEmpty(value)) return [];
 
@@ -102,9 +85,13 @@ const createRecordBlock = (record) => ({
 });
 
 export const downloadVehicleHistoryPdf = async (vehicle) => {
+  console.log("[PDF] start");
+
   if (!vehicle || !Array.isArray(vehicle.records)) {
     throw new Error("Automobilio istorijos duomenys nepasiekiami.");
   }
+
+  console.log("[PDF] fonts ready");
 
   const registrationNumber = String(vehicle.registrationNumber || "AUTOMOBILIS").trim();
   const records = vehicle.records
@@ -214,12 +201,17 @@ export const downloadVehicleHistoryPdf = async (vehicle) => {
     },
   };
 
+  console.log("[PDF] document definition ready");
+
   const safeRegistrationNumber = registrationNumber.replace(/[^A-Z0-9-]/gi, "-");
   const fileName = `AutoUP-${safeRegistrationNumber}-istorija.pdf`;
 
   try {
     const pdfDocument = pdfMake.createPdf(documentDefinition);
-    await downloadPdfBlob(pdfDocument, fileName);
+    console.log("[PDF] createPdf called");
+    console.log("[PDF] download started");
+    await pdfDocument.download(fileName);
+    console.log("[PDF] download completed");
   } catch (error) {
     console.error("PDF generation failed:", error);
     throw error;
