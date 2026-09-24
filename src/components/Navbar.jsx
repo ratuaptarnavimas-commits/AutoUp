@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CalendarDays } from "lucide-react";
 import CalendarModal from "./schedule/CalendarModal";
-import { useAdmin } from "@/context/AdminContext";
 
 export default function Navbar() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const { isAdmin, isLoading } = useAdmin();
 
   return (
     <>
@@ -48,11 +46,9 @@ export default function Navbar() {
             KONTAKTAI
           </Link>
 
-          {!isLoading && isAdmin && (
-            <Link to="/admin/automobilio-istorija" className="hover:text-amber-500 transition-colors">
-              ADMIN
-            </Link>
-          )}
+          <Link to="/admin/automobilio-istorija" className="hover:text-amber-500 transition-colors">
+            ADMIN
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
