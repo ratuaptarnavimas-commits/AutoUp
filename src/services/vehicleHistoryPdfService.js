@@ -16,39 +16,22 @@ const formatMileage = (value) => {
 
 const nonEmpty = (value) => value !== null && value !== undefined && String(value).trim() !== "";
 
-const downloadPdfBlob = (pdfDocument, fileName) => new Promise((resolve, reject) => {
-  let timeoutId;
+const downloadPdfBlob = async (pdfDocument, fileName) => {
+  const timeout = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error("PDF generavimas užtruko per ilgai.")), 30000);
+  });
+  const blob = await Promise.race([pdfDocument.getBlob(), timeout]);
+  const objectUrl = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
 
-  const finish = (callback) => {
-    clearTimeout(timeoutId);
-    callback();
-  };
-
-  timeoutId = setTimeout(() => {
-    reject(new Error("PDF generavimas užtruko per ilgai."));
-  }, 30000);
-
-  try {
-    pdfDocument.getBlob((blob) => {
-      try {
-        const objectUrl = URL.createObjectURL(blob);
-        const anchor = document.createElement("a");
-        anchor.href = objectUrl;
-        anchor.download = fileName;
-        anchor.rel = "noopener";
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
-        setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-        finish(resolve);
-      } catch (error) {
-        finish(() => reject(error));
-      }
-    });
-  } catch (error) {
-    finish(() => reject(error));
-  }
-});
+  anchor.href = objectUrl;
+  anchor.download = fileName;
+  anchor.rel = "noopener";
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+};
 
 const addField = (label, value, options = {}) => {
   if (!nonEmpty(value)) return [];
