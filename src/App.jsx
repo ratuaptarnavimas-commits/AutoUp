@@ -13,6 +13,8 @@ import AutopartsCartPage from "./components/autoparts/AutopartsCartPage";
 import AutopartsCheckoutPage from "./components/autoparts/AutopartsCheckoutPage";
 import Kontaktai from "./components/Kontaktai";
 import TireDisposalPage from "./pages/TireDisposalPage";
+import VehicleHistoryPage from "./pages/VehicleHistoryPage";
+import AdminVehicleHistoryPage from "./pages/AdminVehicleHistoryPage";
 import BoltsBackground from "./components/BoltsBackground";
 import PasswordRecoveryModal from "./components/auth/PasswordRecoveryModal";
 import SchemaOrg from "./components/seo/SchemaOrg";
@@ -42,10 +44,14 @@ function App() {
                 <div className="mx-auto max-w-[1240px] px-4 pb-6 sm:px-6 lg:px-8">
                   <div className="grid gap-4 lg:grid-cols-2">
                     <TireDisposalCard />
-                    <section className="relative min-h-[162px] overflow-hidden rounded-2xl border border-emerald-700/70 bg-emerald-950/90 p-5 shadow-2xl shadow-emerald-950/30 sm:p-6">
-                      <img src={autopartsImage} alt="Automobilių dalys" className="absolute inset-y-0 right-0 h-full w-[46%] object-cover object-left opacity-90" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-950 via-emerald-950/90 to-emerald-950/10" />
-                      <div className="relative z-10 max-w-[70%]">
+                    <section className="relative min-h-[320px] overflow-hidden rounded-3xl border border-emerald-700/70 bg-emerald-950/90 p-5 shadow-2xl shadow-emerald-950/30 sm:p-6">
+                      <img
+                        src={autopartsImage}
+                        alt="Automobilių dalys"
+                        className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-90"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-950 via-emerald-950/90 via-emerald-950/70 to-emerald-950/20" />
+                      <div className="relative z-10 max-w-[62%]">
                         <h2 className="text-xl font-black text-white sm:text-2xl">Automobilių dalys</h2>
                         <p className="mt-1 text-sm leading-relaxed text-emerald-100">Automobilių dalys pagal Jūsų automobilį – parinkimas, užsakymas ir montavimas mūsų servise.</p>
                         <Link to="/kontaktai#registracija" className="mt-4 inline-flex items-center justify-center rounded-xl bg-amber-500 px-4 py-2.5 text-center text-xs font-black uppercase tracking-wide text-black transition-colors hover:bg-amber-400">
@@ -67,6 +73,8 @@ function App() {
           <Route path="/autoprekes-preview/checkout" element={<AutopartsCheckoutPage />} />
           <Route path="/autoprekes-preview" element={<AutoprekesStore />} />
           <Route path="/kontaktai" element={<Kontaktai />} />
+          <Route path="/automobilio-istorija" element={<VehicleHistoryPage />} />
+          <Route path="/admin/automobilio-istorija" element={<AdminVehicleHistoryPage />} />
           <Route path="/padangu-priemimas" element={<TireDisposalPage />} />
         </Routes>
       </div>

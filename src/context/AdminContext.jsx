@@ -6,27 +6,53 @@ const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
   const [deletedPromotions, setDeletedPromotions] = useState([]);
 
   useEffect(() => {
     let mounted = true;
 
-    const updateAdminStatus = (session) => {
-      const user = session?.user;
-      const configuredAdminEmail = import.meta.env.VITE_ADMIN_EMAIL?.toLowerCase();
-      const hasAdminRole = user?.app_metadata?.role === 'admin';
-      const isConfiguredAdmin = configuredAdminEmail && user?.email?.toLowerCase() === configuredAdminEmail;
+    const updateAdminStatus = async (nextSession) => {
+      let authenticatedUser = nextSession?.user || null;
 
-      if (mounted) setIsAdmin(Boolean(user && (hasAdminRole || isConfiguredAdmin)));
+      if (nextSession) {
+        const { data, error } = await supabase.auth.getUser();
+        if (error) {
+          console.error('Nepavyko patikrinti Supabase vartotojo.', {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint,
+          });
+          authenticatedUser = null;
+        } else {
+          authenticatedUser = data.user;
+        }
+      }
+
+      if (mounted) {
+        setSession(nextSession || null);
+        setUser(authenticatedUser);
+        setIsAdmin(authenticatedUser?.app_metadata?.role === 'admin');
+      }
     };
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      updateAdminStatus(session);
+    supabase.auth.getSession().then(async ({ data: { session: currentSession }, error }) => {
+      if (error) {
+        console.error('Nepavyko gauti Supabase sesijos.', {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint,
+        });
+      }
+      await updateAdminStatus(currentSession);
       if (mounted) setIsLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      updateAdminStatus(session);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      await updateAdminStatus(session);
       if (mounted) setIsLoading(false);
     });
 
@@ -48,8 +74,16 @@ export const AdminProvider = ({ children }) => {
   }, []);
 
   const loginAdmin = async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return !error;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.session) return false;
+
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError || userData.user?.app_metadata?.role !== 'admin') {
+      await supabase.auth.signOut();
+      return false;
+    }
+
+    return true;
   };
 
   const logoutAdmin = async () => {
@@ -81,6 +115,8 @@ export const AdminProvider = ({ children }) => {
     <AdminContext.Provider value={{
       isAdmin,
       isLoading,
+      session,
+      user,
       loginAdmin,
       logoutAdmin,
       markPromotionAsDeleted,

@@ -1,0 +1,2 @@
+import { getProduct, listProducts } from "../services/catalogService.js";
+export async function productsRoute(url) { if (url.pathname.startsWith("/api/products/search")) return listProducts({ query: url.searchParams.get("q") || "" }); const id = url.pathname.replace("/api/products/", ""); if (id && id !== "/api/products") return getProduct(id); return listProducts({ category: url.searchParams.get("category") || undefined, vehicleId: url.searchParams.get("vehicleId") || undefined }); }
