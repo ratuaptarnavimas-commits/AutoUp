@@ -243,15 +243,32 @@ export async function updateVehicle(vehicleId, updates) {
     throw duplicateError;
   }
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('vehicles')
     .update(payload)
     .eq('id', vehicleId)
-    .select()
+    .select('id')
     .single();
 
   if (error) throw error;
-  return normalizeVehicle(data);
+
+  const { data: persistedVehicle, error: readError } = await supabase
+    .from('vehicles')
+    .select('id, make, model, year, engine, registration_number, vin, created_at, updated_at')
+    .eq('id', vehicleId)
+    .single();
+
+  if (readError) throw readError;
+
+  const persistedYear = persistedVehicle.year === null ? null : Number(persistedVehicle.year);
+  if (persistedYear !== payload.year) {
+    const persistenceError = new Error('Supabase neįrašė automobilio metų reikšmės.');
+    persistenceError.code = 'VEHICLE_YEAR_NOT_PERSISTED';
+    persistenceError.details = { requestedYear: payload.year, persistedYear };
+    throw persistenceError;
+  }
+
+  return normalizeVehicle(persistedVehicle);
 }
 
 export async function createServiceRecord(vehicleId, record) {
