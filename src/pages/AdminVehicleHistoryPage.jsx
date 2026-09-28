@@ -478,6 +478,7 @@ export default function AdminVehicleHistoryPage() {
   const handleSaveVehicle = async () => {
     const draftVehicle = {
       ...vehicleEditDraft,
+      year: vehicleEditDraft?.year ? Number(vehicleEditDraft.year) : null,
       registrationNumber: normalizeVehicleIdentifier(vehicleEditDraft?.registrationNumber),
       vin: normalizeVehicleIdentifier(vehicleEditDraft?.vin),
     };
