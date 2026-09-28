@@ -25,7 +25,7 @@ create table if not exists public.vehicles (
   id uuid primary key default gen_random_uuid(),
   make text not null,
   model text not null,
-  year integer,
+  year text,
   engine text,
   registration_number text not null unique,
   vin text not null unique,

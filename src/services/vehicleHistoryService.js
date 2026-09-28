@@ -222,7 +222,7 @@ export async function updateVehicle(vehicleId, updates) {
   const payload = {
     make: updates.make?.trim(),
     model: updates.model?.trim(),
-    year: updates.year === "" || updates.year === null ? null : Number(updates.year),
+    year: updates.year === null || updates.year === undefined ? null : String(updates.year).trim() || null,
     engine: updates.engine?.trim() || "",
     registration_number: normalizeVehicleIdentifier(updates.registrationNumber || updates.registration_number),
     vin: normalizeVehicleIdentifier(updates.vin),
@@ -260,7 +260,7 @@ export async function updateVehicle(vehicleId, updates) {
 
   if (readError) throw readError;
 
-  const persistedYear = persistedVehicle.year === null ? null : Number(persistedVehicle.year);
+  const persistedYear = persistedVehicle.year === null ? null : String(persistedVehicle.year);
   if (persistedYear !== payload.year) {
     const persistenceError = new Error('Supabase neįrašė automobilio metų reikšmės.');
     persistenceError.code = 'VEHICLE_YEAR_NOT_PERSISTED';

@@ -295,7 +295,7 @@ export default function AdminVehicleHistoryPage() {
         make: vehicle.make.trim(),
         model: vehicle.model.trim(),
         engine: vehicle.engine.trim(),
-        year: vehicle.year ? Number(vehicle.year) : null,
+        year: vehicle.year.trim() || null,
       });
       const selectedCreatedVehicle = { ...createdVehicle, records: [] };
       setRemoteVehicle(selectedCreatedVehicle);
@@ -478,7 +478,7 @@ export default function AdminVehicleHistoryPage() {
   const handleSaveVehicle = async () => {
     const draftVehicle = {
       ...vehicleEditDraft,
-      year: vehicleEditDraft?.year ? Number(vehicleEditDraft.year) : null,
+      year: vehicleEditDraft?.year?.trim() || null,
       registrationNumber: normalizeVehicleIdentifier(vehicleEditDraft?.registrationNumber),
       vin: normalizeVehicleIdentifier(vehicleEditDraft?.vin),
     };
@@ -641,11 +641,9 @@ export default function AdminVehicleHistoryPage() {
               <label className="text-sm font-semibold text-slate-200">
                 METAI
                 <input
-                  type="number"
+                  type="text"
                   value={newVehicleDraft.year}
                   onChange={(event) => handleNewVehicleFieldChange("year", event.target.value)}
-                  min="1900"
-                  max="2100"
                   className="mt-2 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white outline-none focus:border-amber-500"
                 />
               </label>
@@ -716,7 +714,7 @@ export default function AdminVehicleHistoryPage() {
                     <label key={field} className="text-sm font-semibold text-slate-200">
                       {field === "make" ? "MARKĖ" : field === "model" ? "MODELIS" : field === "year" ? "METAI" : field === "engine" ? "VARIKLIS" : field === "registrationNumber" ? "VALSTYBINIS NUMERIS" : "VIN"}
                       <input
-                        type={field === "year" ? "number" : "text"}
+                        type="text"
                         value={vehicleEditDraft?.[field] || ""}
                         maxLength={field === "vin" ? 17 : undefined}
                         onChange={(event) => setVehicleEditDraft((current) => ({
