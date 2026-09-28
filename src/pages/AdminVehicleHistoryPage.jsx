@@ -582,18 +582,16 @@ export default function AdminVehicleHistoryPage() {
               IEŠKOTI
             </button>
 
-            {(searchStatus === "not-found" || isAddingVehicle) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setIsAddingVehicle((current) => !current);
-                  setNewVehicleStatus({ type: "", message: "" });
-                }}
-                className="inline-flex items-center justify-center rounded-xl border border-amber-500/70 bg-amber-500/10 px-6 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-amber-300 transition-colors hover:bg-amber-500/20"
-              >
-                + PRIDĖTI NAUJĄ AUTOMOBILĮ
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                setIsAddingVehicle((current) => !current);
+                setNewVehicleStatus({ type: "", message: "" });
+              }}
+              className="inline-flex items-center justify-center rounded-xl border border-amber-500/70 bg-amber-500/10 px-6 py-3.5 text-xs font-black uppercase tracking-[0.12em] text-amber-300 transition-colors hover:bg-amber-500/20"
+            >
+              + PRIDĖTI NAUJĄ AUTOMOBILĮ
+            </button>
           </div>
         </section>
 
@@ -765,7 +763,7 @@ export default function AdminVehicleHistoryPage() {
             </section>
 
             <section className="rounded-[28px] border border-emerald-800/70 bg-[#061b12]/90 p-6 shadow-lg">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-2xl font-black text-white">{editingRecordId ? "Redaguoti atliktą darbą" : "Pridėti atliktą darbą"}</h2>
                 <button
                   type="button"
@@ -773,9 +771,9 @@ export default function AdminVehicleHistoryPage() {
                     setDraft(createEmptyEntry());
                     setEditingRecordId(null);
                   }}
-                  className="rounded-xl border border-emerald-700 bg-emerald-900/70 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-emerald-200"
+                  className="inline-flex items-center justify-center rounded-xl border border-amber-500/70 bg-amber-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-amber-300 transition-colors hover:bg-amber-500/20"
                 >
-                  Naujas įrašas
+                  + PRIDĖTI ATLIKTĄ DARBĄ
                 </button>
               </div>
 
